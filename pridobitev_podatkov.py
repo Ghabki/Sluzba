@@ -1,5 +1,9 @@
 import datetime
 
+
+
+
+
 class PridobitevPodatkov:
     vnos = 0
 

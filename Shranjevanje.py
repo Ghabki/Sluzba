@@ -4,15 +4,15 @@ import hashlib
 
 
 
+
 class Shranjevanje:
 
-
-    def hash_password(password):
+    def hash_password(self,password):
         # uuid is used to generate a random number
         salt = uuid.uuid4().hex
         return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
 
-    def check_password(hashed_password, user_password):
+    def check_password(self, hashed_password, user_password):
         password, salt = hashed_password.split(':')
         return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
@@ -22,11 +22,11 @@ class Shranjevanje:
 
     def register_file(self):
         if os.path.isfile('registracija.txt'):
-            print("obstaja")
+            print("file obstaja")
         else:
             open("registracija.txt", "w+")
 
-            print("dfak")
+            print("file ni obstajal in je bil narejen vi mapi kjer je program")
 
 
     def search(self, username):
@@ -44,8 +44,11 @@ class Shranjevanje:
 
             if pravilen_line[0] == username:  # da vsebuje ze noter
                 file.close()
+
                 return True
             else:  #ne vseebuje noter
+
+
                 continue
             file.close()
 
@@ -57,37 +60,21 @@ class Shranjevanje:
             print("ze vsebuje ta username")
             zapis.close()
         else:
-            zapis.write(username + "," + password + "\n")
+            passwrd = self.hash_password(password)
+
+            zapis.write(username + "," + passwrd + "\n")
             zapis.close()
 
+    def stevilka(self, stevilka):
+        stevilkica = stevilka
 
 
 
+    def prijava(self, username, password):
+
+        print("agsfd")
 
 
 
+s = Shranjevanje()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def create_file(self):
-        vnos = str(input("Vnesi ime"))
-        f = open(vnos+".txt", "w+")
-
-
-s= Shranjevanje()
-s.registracija("bubu", "polek")
