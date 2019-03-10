@@ -61,16 +61,12 @@ class LoginFrame(Frame):
         username = self.entry_username.get()
         password = self.entry_password.get()
 
+#todo login
+#NEVEM KAKO TO DELA NEVEM ZAKAJ TO DELA NEVEM ZAKAJ JE TO TAKO RAKAVO!!
         self.master.withdraw()
-        toplevel = Toplevel(self.master)
-        self.master.quit()
         self.newWindow = Toplevel(self.master)
-        self.app = MainScreen(self.newWindow)        #self.newWindow = Toplevel(self.master)
-        #self.app = MainScreen(self.newWindow)
+        MainScreen(self.newWindow)
 
-
-
-        # print(username, password)
 class MainScreen(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -79,26 +75,6 @@ class MainScreen(Frame):
         self.quitButton = Button(self.frame, text='Quit', width=25, command=self.close_windows)
         self.quitButton.pack()
         self.frame.pack()
-
-    def close_windows(self):
-        self.master.destroy()
-
-
-
-
-
-
-
-#if __name__ == "__main__":
- #   app = Mainframe()
-  #  app.mainloop()
-
-#if __name__ == "__main__":
- #   gui = GUI()
-  #  gui.mainloop()
-
-
-
 
 
 if __name__ == '__main__':
