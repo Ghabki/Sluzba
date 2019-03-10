@@ -38,10 +38,7 @@ class LoginFrame(Frame):
 
         self.pack()
 
-    def change(self, frame):
-        self.frame.pack_forget()  # delete currrent frame
-        self.frame = frame(self)
-        self.frame.pack()
+
 
 
     def _register_btn_clicked(self):
@@ -64,43 +61,12 @@ class LoginFrame(Frame):
         username = self.entry_username.get()
         password = self.entry_password.get()
 
-        self.openFrame()
-
-
-    def hide(self):
-        """"""
-        self.root.withdraw()
-
-    # ----------------------------------------------------------------------
-    def openFrame(self):
-        """"""
-        self.hide()
-        subFrame = MainScreen()
-        handler = lambda: self.onCloseOtherFrame(subFrame)
-        btn = Tk.Button(subFrame, text="Close", command=handler)
-        btn.pack()
-
-    # ----------------------------------------------------------------------
-    def onCloseOtherFrame(self, otherFrame):
-        """"""
-        otherFrame.destroy()
-        self.show()
-
-    # ----------------------------------------------------------------------
-    def show(self):
-        """"""
-        self.root.update()
-        self.root.deiconify()
-
-
-
-
-
-
-        #self.newWindow = Toplevel(self.master)
+        self.master.withdraw()
+        toplevel = Toplevel(self.master)
+        self.master.quit()
+        self.newWindow = Toplevel(self.master)
+        self.app = MainScreen(self.newWindow)        #self.newWindow = Toplevel(self.master)
         #self.app = MainScreen(self.newWindow)
-
-
 
 
 
@@ -120,41 +86,7 @@ class MainScreen(Frame):
 
 
 
-class GUI(Tk):
-    def __init__(self, *args):
-        Tk.__init__(self, *args)
 
-
-
-        # Creation of all the relevant Frames
-
-        container = Frame(self)
-        container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(200, weight=1)
-        container.grid_columnconfigure(200, weight=1)
-
-        self.frames = {}
-
-        for F in (LoginFrame, MainScreen):
-            frame = F(self, container)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.raise_frame(LoginFrame)
-
-        # Frame manipulation functions
-
-    def raise_frame(self, page_name):
-        frame = self.frames[page_name]
-        frame.tkraise()
-
-    def update_frame(self, page_name):
-        frame = self.frames[page_name]
-        frame.update()
-
-    def destroy_frame(self, page_name):
-        frame = self.frames[page_name]
-        frame.destroy()
 
 
 #if __name__ == "__main__":
