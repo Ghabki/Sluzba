@@ -63,6 +63,28 @@ class Shranjevanje:
             zapis.close()
 
     def prijava(self, username, password):
+        print("logging in")
+
+        if self.search(username) == True:
+            file = open("registracija.txt", "r")
+
+            if os.stat("registracija.txt").st_size == 0:
+                file.close()
+                return False
+
+            for line in file:
+                new_line = line.rstrip()
+                pravilen_line = new_line.split(",")
+                if pravilen_line[0] == username:
+                    if self.check_password(pravilen_line[1],password) == True:
+                        return True
+                    else:
+                        return False
+
+
+
+
+
 
 
 

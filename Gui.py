@@ -15,6 +15,7 @@ class LoginFrame(Frame):
         self.master.geometry("300x100")
         self.master.iconbitmap(r"favicon.ico")
 
+
         self.label_username = Label(self, text="Username")
         self.label_password = Label(self, text="Password")
 
@@ -57,14 +58,25 @@ class LoginFrame(Frame):
 
     def _login_btn_clicked(self):
         # print("Clicked")
-        username = self.entry_username.get()
-        password = self.entry_password.get()
 
-#todo login
-#NEVEM KAKO TO DELA NEVEM ZAKAJ TO DELA NEVEM ZAKAJ JE TO TAKO RAKAVO!!
-        self.master.withdraw()
-        self.newWindow = Toplevel(self.master)
-        MainScreen(self.newWindow)
+
+        while(True):
+            username = self.entry_username.get()
+            password = self.entry_password.get()
+
+            if self.shra.prijava(username, password):
+                # NEVEM KAKO TO DELA NEVEM ZAKAJ TO DELA NEVEM ZAKAJ JE TO TAKO RAKAVO!!
+                self.master.withdraw()
+                self.glavno_okno = Toplevel(self.master)
+                MainScreen(self.glavno_okno)
+                break
+            else:
+                self.besedilo.set("Napačni username \n ali geslo")
+                break
+
+
+
+
 
 
 class MainScreen(Frame):
@@ -85,9 +97,7 @@ class MainScreen(Frame):
         print("nice")
 
 
-
 if __name__ == '__main__':
     root = Tk()
     prvo_okno = LoginFrame(root)
-
     root.mainloop()
