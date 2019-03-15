@@ -59,7 +59,7 @@ class LoginFrame(Frame):
     def _login_btn_clicked(self):
         # print("Clicked")
 
-        while(True):
+        while True:
             username = self.entry_username.get()
             password = self.entry_password.get()
 
@@ -99,7 +99,8 @@ class MainScreen(Frame):
 
     # def close_windows(self):
     # root.destroy()
-    def exit_fix(self):
+    @staticmethod
+    def exit_fix():
         print("destroyed")
         root.destroy()
 
