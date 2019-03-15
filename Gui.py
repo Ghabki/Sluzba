@@ -1,7 +1,6 @@
 from tkinter import *
-from tkinter import ttk
 from Sluzba.shranjevanje import *
-from Sluzba.main_screen_code import *
+from Sluzba.main import *
 #todo zrihtaj da napise opozorila za uporabo asci znakov bla bla blank line fix
 
 
@@ -76,10 +75,7 @@ class LoginFrame(Frame):
 
 class MainScreen(Frame):
     def __init__(self, master):
-
         super().__init__(master)
-
-        self.master.deiconify()
 
         self.master.title("My work h app")
         self.master.geometry("600x300")
@@ -88,13 +84,43 @@ class MainScreen(Frame):
         # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
-        self.frame = Frame(self)
+        self.frame = Frame(self.master)
 
-        self.treeView = ttk.Treeview(self)
 
-        self.quitButton = Button(self, text='Quit', width=25, command=self.close_window)
-        self.quitButton.pack()
-        self.treeView.pack()
+
+        # create scroll bar widget
+        sb = Scrollbar(self.frame, orient=VERTICAL)
+
+        # create listbox widget
+        self.listbox = Listbox(self.frame, exportselection=0, yscrollcommand=sb.set, width=30, height=6, selectmode=SINGLE)
+        # set yscrollcommand to the scrollbar widget
+        # default width is 20, default height is 10
+        # selectmode can be SINGLE, BROWSE, MULTIPLE, EXTENDED (default is BROWSE)
+
+        # set binding on item select in listbox
+        self.listbox.pack(side=LEFT)
+        # config scrollbar and pack
+        sb.config(command=self.listbox.yview)
+        sb.pack(side=RIGHT, fill=Y)
+
+        # grid listbox_frame to window
+        self.frame.grid(row=0, column=0)
+
+        # add items to listbox
+        self.listbox.insert(0, "Item 1 in Listbox")
+        self.listbox.insert(1, "Item 2 in Listbox")
+        self.listbox.insert(2, "Item 3 in Listbox")
+
+        self.list = Listbox(self, width=600, height=300)
+
+        scrollbar = Scrollbar(self)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        self.list.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.list.yview)
+
+        # self.quitButton = Button(self, text='Quit', width=25, command=self.close_window)
+        # self.quitButton.pack()
+
         self.pack()
 
     # def close_windows(self):
@@ -103,9 +129,6 @@ class MainScreen(Frame):
     def exit_fix():
         print("destroyed")
         root.destroy()
-
-    def close_window(self):
-        pass
 
 
 if __name__ == '__main__':
