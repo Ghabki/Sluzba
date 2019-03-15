@@ -96,6 +96,18 @@ class Shranjevanje:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 s = Shranjevanje()
 
 
