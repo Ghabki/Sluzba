@@ -85,7 +85,7 @@ class MainScreen(Frame):
         self.master.geometry("600x300")
         self.master.iconbitmap(r"favicon.ico")
         self.master.configure(background='#22272d')
-
+        # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
         self.frame = Frame(self)
