@@ -1,5 +1,6 @@
 from tkinter import *
 from Sluzba.shranjevanje import *
+from Sluzba.date_picker import *
 from Sluzba.main import *
 #todo zrihtaj da napise opozorila za uporabo asci znakov bla bla blank line fix
 
@@ -14,7 +15,6 @@ class LoginFrame(Frame):
         self.master.title("My work h app")
         self.master.geometry("300x100")
         self.master.iconbitmap(r"favicon.ico")
-
 
         self.label_username = Label(self, text="Username")
         self.label_password = Label(self, text="Password")
@@ -79,13 +79,20 @@ class MainScreen(Frame):
         super().__init__(master)
 
         self.master.title("My work h app")
-        self.master.geometry("650x350")
+        self.master.geometry("650x345")
         self.master.iconbitmap(r"favicon.ico")
         self.master.configure(background='#22272d')
         # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
-        self.frame = Frame(self.master)
+        self.frame = Frame(self.master, width=330, height=350, pady=3)
+        self.frame.grid(row=0, column=0)
+
+        self.top_frame = Frame(self.master, width=389, height=345, pady=3, background="gray14")
+        self.top_frame.grid(row=0, column=1)
+
+
+
         # naredi listbox
         self.create_list_box()
 
@@ -94,12 +101,19 @@ class MainScreen(Frame):
 
 
 
+        #self.datum = Label(self.top_frame, text=__doc__)
+        #self.grid(row=0, column=0)
+        #self.datum.pack(fill=BOTH)
 
-        # create scroll bar widget
+        #Datepicker(self.top_frame).pack()
+
+        #self.logbtnn = Button(self.top_frame, text="Login", command=self.lolek)
+        #self.logbtnn.grid(row=0, column=1)
+
+    def lolek(self):
+        pass
 
 
-    # def close_windows(self):
-    # root.destroy()
     @staticmethod
     def exit_fix():
         print("destroyed")
@@ -109,39 +123,12 @@ class MainScreen(Frame):
         sb = Scrollbar(self.frame, orient=VERTICAL)
 
         # create listbox widget
-        self.listbox = Listbox(self.frame, exportselection=0, yscrollcommand=sb.set, width=60, height=10,
-                               selectmode=SINGLE)
+        listbox = Listbox(self.frame, exportselection=0, yscrollcommand=sb.set,
+                               selectmode=SINGLE, width=40, height=21)
+        listbox.pack(side=TOP, anchor=W, fill=X, expand=YES)
 
-        self.listbox.pack(side=LEFT)
-        # set yscrollcommand to the scrollbar widget
-        # default width is 20, default height is 10
-        # selectmode can be SINGLE, BROWSE, MULTIPLE, EXTENDED (default is BROWSE)
-
-        # set binding on item select in listbox
-
-        # self.list = Listbox(self, width=600, height=300)
-
-        # config scrollbar and pack
-        sb.config(command=self.listbox.yview)
+        sb.config(command=listbox.yview)
         sb.pack(side=RIGHT, fill=Y)
-
-        # grid listbox_frame to window
-        self.frame.grid(row=0, column=0)
-
-        # add items to listbox
-        # self.listbox.insert(0, "Item 1 in Listbox")
-        # elf.listbox.insert(1, "Item 2 in Listbox")
-        # self.listbox.insert(2, "Item 3 in Listbox")
-
-        # scrollbar = Scrollbar(self)
-        # scrollbar.pack(side=RIGHT, fill=Y)
-        # self.list.config(yscrollcommand=scrollbar.set)
-        # scrollbar.config(command=self.list.yview)
-
-        # self.quitButton = Button(self, text='Quit', width=25, command=self.close_window)
-        # self.quitButton.pack()
-
-        # self.frame.pack()
 
 
 if __name__ == '__main__':
