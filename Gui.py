@@ -2,6 +2,7 @@ from tkinter import *
 from Sluzba.shranjevanje import *
 from Sluzba.date_picker import *
 from Sluzba.main import *
+
 #todo zrihtaj da napise opozorila za uporabo asci znakov bla bla blank line fix
 
 
@@ -11,6 +12,8 @@ class LoginFrame(Frame):
 
     def __init__(self, master):
         super().__init__(master)
+
+        self.master.resizable(False, False)
         # to sem js dodau
         self.master.title("My work h app")
         self.master.geometry("300x100")
@@ -78,57 +81,71 @@ class MainScreen(Frame):
     def __init__(self, master):
         super().__init__(master)
 
+        #self.master.resizable(False, False)
         self.master.title("My work h app")
         self.master.geometry("650x345")
         self.master.iconbitmap(r"favicon.ico")
-        self.master.configure(background='#22272d')
+        self.master.configure(background='gray14')
         # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
-        self.frame = Frame(self.master, width=330, height=350, pady=3)
-        self.frame.grid(row=0, column=0)
+        self.frame = Frame(self.master, width=345, background="steel blue")
+        #self.frame.grid(row=0, column=0)
+        self.frame.pack(fill=X)
 
-        self.top_frame = Frame(self.master, width=389, height=345, pady=3, background="gray14")
-        self.top_frame.grid(row=0, column=1)
-
-
-
+        #self.top_frame = Frame(self.master, width=389, height=345, pady=3, background="gray14")
+        #self.top_frame.grid(row=0, column=1)
         # naredi listbox
         self.create_list_box()
 
+        self.entry_username = Entry(self.frame)
+        self.entry_username.place(x=300, y=0)
+        self.entry_username.pack()
+
+
+        #self.datum = Label(self.frame, text=__doc__)
+        #self.datum.place(x=500, y=150)
+        self.regbtn = Button(self.frame, text="Register", command=self.lolek)
+        self.regbtn.place(x=300, y=50)
+
+        self.entry_usernameee = Entry(self.frame)
+        self.entry_usernameee.place(x=400, y=200)
+
+
+        self.nice = Datepicker(self.frame)
+        self.nice.place(x=300, y=90)
 
 
 
 
-
-        #self.datum = Label(self.top_frame, text=__doc__)
-        #self.grid(row=0, column=0)
-        #self.datum.pack(fill=BOTH)
-
-        #Datepicker(self.top_frame).pack()
 
         #self.logbtnn = Button(self.top_frame, text="Login", command=self.lolek)
         #self.logbtnn.grid(row=0, column=1)
 
     def lolek(self):
-        pass
+        #a = self.Datepicker.get()
+        print("fdshgsghdf")
+        print(self.nice.current_text)
 
+
+
+    def create_list_box(self):
+        listbox = Listbox(self.frame, height=21, width=40, selectmode=SINGLE)
+        scroll = Scrollbar(self.frame, command=listbox.yview)
+
+        listbox.configure(yscrollcommand=scroll.set)
+        listbox.pack(side=LEFT, fill=Y)
+        scroll.pack(side=LEFT, fill=Y)
+
+        for item in range(30):
+            listbox.insert(END, item)
 
     @staticmethod
     def exit_fix():
         print("destroyed")
         root.destroy()
 
-    def create_list_box(self):
-        sb = Scrollbar(self.frame, orient=VERTICAL)
 
-        # create listbox widget
-        listbox = Listbox(self.frame, exportselection=0, yscrollcommand=sb.set,
-                               selectmode=SINGLE, width=40, height=21)
-        listbox.pack(side=TOP, anchor=W, fill=X, expand=YES)
-
-        sb.config(command=listbox.yview)
-        sb.pack(side=RIGHT, fill=Y)
 
 
 if __name__ == '__main__':
