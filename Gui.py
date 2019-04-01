@@ -1,14 +1,14 @@
 from tkinter import *
 from Sluzba.shranjevanje import *
 from Sluzba.date_picker import *
-from Sluzba.main import *
+#from Sluzba.main import *
 
-#todo zrihtaj da napise opozorila za uporabo asci znakov bla bla blank line fix
 
 
 class LoginFrame(Frame):
     shra = Shranjevanje()
     shra.register_file()
+
 
     def __init__(self, master):
         super().__init__(master)
@@ -16,7 +16,7 @@ class LoginFrame(Frame):
         self.master.resizable(False, False)
         # to sem js dodau
         self.master.title("My work h app")
-        self.master.geometry("300x100")
+        self.master.geometry("300x105")
         self.master.iconbitmap(r"favicon.ico")
 
         self.label_username = Label(self, text="Username")
@@ -52,11 +52,19 @@ class LoginFrame(Frame):
 
             self.shra.registracija(username, password)
 
-            if self.shra.get_x() == 1:
-                self.besedilo.set("ze obstaja tak username")
+            asciii = self.shra.get_ali_pravilen_ascii()
+
+            if asciii:
+                rak = self.shra.get_x()
+                if rak == 1:
+                    self.besedilo.set("ze obstaja tak username")
+                    break
+                elif rak == 0:
+                    self.besedilo.set("Registriran")
+                    break
                 break
             else:
-                self.besedilo.set("Registriran")
+                self.besedilo.set("Uporavi samo ascii \n znake")
                 break
 
     def _login_btn_clicked(self):
@@ -144,8 +152,6 @@ class MainScreen(Frame):
     def exit_fix():
         print("destroyed")
         root.destroy()
-
-
 
 
 if __name__ == '__main__':
