@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 from Sluzba.shranjevanje import *
 from Sluzba.date_picker import *
 #from Sluzba.main import *
@@ -89,8 +90,8 @@ class MainScreen(Frame):
     def __init__(self, master):
         super().__init__(master)
 
-        #self.master.resizable(False, False)
-        self.master.title("My work h app")
+        self.master.resizable(False, False)
+        self.master.title("My work hour app")
         self.master.geometry("650x345")
         self.master.iconbitmap(r"favicon.ico")
         self.master.configure(background='gray14')
@@ -98,47 +99,77 @@ class MainScreen(Frame):
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
         self.frame = Frame(self.master, width=345, background="steel blue")
-        #self.frame.grid(row=0, column=0)
         self.frame.pack(fill=X)
 
-        #self.top_frame = Frame(self.master, width=389, height=345, pady=3, background="gray14")
-        #self.top_frame.grid(row=0, column=1)
         # naredi listbox
         self.create_list_box()
 
-        self.entry_username = Entry(self.frame)
-        self.entry_username.place(x=300, y=0)
-        self.entry_username.pack()
-
-
-        #self.datum = Label(self.frame, text=__doc__)
-        #self.datum.place(x=500, y=150)
-        self.regbtn = Button(self.frame, text="Register", command=self.lolek)
-        self.regbtn.place(x=300, y=50)
-
-        self.entry_usernameee = Entry(self.frame)
-        self.entry_usernameee.place(x=400, y=200)
-
+        # -----------------
+        # naredi lable da lahko izbereš datum
+        self.izbira_datuma = Label(self.frame, text="Pričetek dela", bg="steel blue")
+        self.izbira_datuma.place(x=300, y=20)
 
         self.nice = Datepicker(self.frame)
-        self.nice.place(x=300, y=90)
+        self.nice.place(x=380, y=20)
+
+        # naredi check button da si zapomne izbire za ta username
+        self.zapomni_izbiro = Checkbutton(self.frame, text="Zapomni si izbire", bg="steel blue", activebackground="steel blue")
+        self.zapomni_izbiro.place(x=530, y=18)
+
+        # naredi check box za to da ce zelis imeti fixne ure ali dnevne pa nocne
+        self.izberi_DanNoc = Checkbutton(self.frame, text="Izbira dnevna in nočna", bg="steel blue",
+                                          activebackground="steel blue")
+        self.izberi_DanNoc.place(x=320, y=50)
+
+        # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
+        self.values = []
+        self.za_evre()
+
+        # naredi combo box za izbiro denarja na uro za dan
+        self.dan = Label(self.frame, text="Dnevni denar", bg="steel blue")
+        self.dan.place(x=300, y=80)
+        self.ure_dan = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.ure_dan.place(x=380, y=80)
+
+        # evri_ure['values'] = ('USA', 'Canada', 'Australia')
+        # naredi combo box za nocne ure
+        self.noc = Label(self.frame, text="Nocni denar", bg="steel blue")
+        self.noc.place(x=470, y=80)
+        self.ure_nocna = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.ure_nocna.place(x=540, y=80)
 
 
+        # todo vstavi preostali dizajn
+        # todo se za dnevne ure, pa gumb za izbiro leta in meseca da izračua zaslužen denar
 
 
+        # gumb za izbrista vrstico iz listboxa
+        self.delbtn = Button(self.frame, text="Delete", command=self.delete)
+        self.delbtn.place(x=580, y=300)
 
-        #self.logbtnn = Button(self.top_frame, text="Login", command=self.lolek)
-        #self.logbtnn.grid(row=0, column=1)
+
+    def delete(self):
+        print("delete")
+
+        # -----------------
+
+    def za_evre(self):
+        a = 4.12
+        for i in range(0, 250):
+            a = a + 0.01
+            a = round(a, 2)
+            self.values.insert(i, a)
+        print(self.values)
 
     def lolek(self):
-        #a = self.Datepicker.get()
+        # a = self.Datepicker.get()
         print("fdshgsghdf")
         print(self.nice.current_text)
 
 
 
     def create_list_box(self):
-        listbox = Listbox(self.frame, height=21, width=40, selectmode=SINGLE)
+        listbox = Listbox(self.frame, height=21, width=30, selectmode=SINGLE, font="14")
         scroll = Scrollbar(self.frame, command=listbox.yview)
 
         listbox.configure(yscrollcommand=scroll.set)
