@@ -1,8 +1,8 @@
 from tkinter import *
-from tkinter import ttk
+# from tkinter import ttk
 from Sluzba.shranjevanje import *
 from Sluzba.date_picker import *
-#from Sluzba.main import *
+# from Sluzba.main import *
 
 
 
@@ -27,21 +27,22 @@ class LoginFrame(Frame):
         self.entry_password = Entry(self, show="*")
         # string var za spreminjajoc se label
         self.besedilo = StringVar(self)
-        self.update_label = Label(self, textvariable=self.besedilo)
+        self.update_label = Label(self.master, textvariable=self.besedilo)
+        self.update_label.place(x=10,y=55)
 
         self.label_username.grid(row=0, sticky=E)
         self.label_password.grid(row=1, sticky=E)
         self.entry_username.grid(row=0, column=1)
         self.entry_password.grid(row=1, column=1)
-        self.update_label.grid(row=3, sticky=E)
+        # self.update_label.grid(row=3, sticky=E)
         # da fokusira okence
         self.entry_username.focus()
 
         self.logbtn = Button(self, text="Login", command=self._login_btn_clicked)
-        self.logbtn.grid(row=2, column=1)
+        self.logbtn.grid(row=2, column=1, pady=2)
 
         self.regbtn = Button(self, text="Register", command=self._register_btn_clicked)
-        self.regbtn.grid(row=3, column=1)
+        self.regbtn.grid(row=3, column=1, pady=2)
 
         self.pack()
 
@@ -58,14 +59,14 @@ class LoginFrame(Frame):
             if asciii:
                 rak = self.shra.get_x()
                 if rak == 1:
-                    self.besedilo.set("ze obstaja tak username")
+                    self.besedilo.set("Že obstaja tak username")
                     break
                 elif rak == 0:
                     self.besedilo.set("Registriran")
                     break
                 break
             else:
-                self.besedilo.set("Uporavi samo ascii \n znake")
+                self.besedilo.set("Uporabi samo ascii \n znake")
                 break
 
     def _login_btn_clicked(self):
@@ -133,8 +134,7 @@ class MainScreen(Frame):
         self.dan.place(x=300, y=80)
         self.ure_dan = ttk.Combobox(self.frame, values=self.values, width=10)
         self.ure_dan.place(x=380, y=80)
-        self.ure_dan.current(87)
-
+        self.ure_dan.current(87)  # <------------------------- todo uporabi to za nastaviti željeno vrednost ob prijavi
 
         # evri_ure['values'] = ('USA', 'Canada', 'Australia')
         # naredi combo box za nocne ure
@@ -150,13 +150,10 @@ class MainScreen(Frame):
         self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
         self.fixne_ure.place(x=380, y=110)
 
-
         self.fixno = Label(self.frame, text="Št. nočnih ur", bg="steel blue")
         self.fixno.place(x=470, y=110)
         self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
         self.fixne_ure.place(x=543, y=110)
-
-
 
         # okno za fixne ure
         self.fixno = Label(self.frame, text="Fixni denar", bg="steel blue")
@@ -167,12 +164,11 @@ class MainScreen(Frame):
         self.fixno = Label(self.frame, text="Fixne ure", bg="steel blue")
         self.fixno.place(x=470, y=140)
 
-
         # izberi mesec in letoza izračun
         self.mesec = ttk.Combobox(self.frame, values=self.meseci, width=10)
-        self.mesec.place(x=390, y=190)
+        self.mesec.place(x=380, y=190)
         self.leto = ttk.Combobox(self.frame, values=self.leta, width=10)
-        self.leto.place(x=480, y=190)
+        self.leto.place(x=470, y=190)
 
         self.Izracun_meseci = Label(self.frame, text="Izračun: \nmesec-leto", bg="steel blue")
         self.Izracun_meseci.place(x=300, y=182)
@@ -180,10 +176,17 @@ class MainScreen(Frame):
         self.delbtn = Button(self.frame, text="Izracun", command=self.delete)
         self.delbtn.place(x=580, y=190)
 
-        # todo vstai preostali dizajn
+        # izpis plače
+        self.Izracun_meseci = Label(self.frame, text="Plača: ", bg="steel blue")
+        self.Izracun_meseci.place(x=300, y=240)
+        self.placa = StringVar(self) # <---------------
+        self.update_label_placa = Label(self, textvariable=self.placa)
+        self.update_label_placa.place(x=400,y=240)
 
-        # todo se za dnevne ure, pa gumb za izbiro leta in meseca da izračua zaslužen denar
-
+        # izpis napak
+        self.placa = StringVar(self)  # <---------------
+        self.update_label_placa = Label(self, textvariable=self.placa)
+        self.update_label_placa.place(x=400, y=250)
 
         # gumb za izbrista vrstico iz listboxa
 
@@ -197,8 +200,6 @@ class MainScreen(Frame):
 
         # -----------------
 
-
-
     def za_evre(self):
         a = 4.12
         for i in range(0, 250):
@@ -211,8 +212,6 @@ class MainScreen(Frame):
         # a = self.Datepicker.get()
         print("fdshgsghdf")
         print(self.nice.current_text)
-
-
 
     def create_list_box(self):
         listbox = Listbox(self.frame, height=21, width=30, selectmode=SINGLE, font="14")
