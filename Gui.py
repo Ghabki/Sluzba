@@ -123,6 +123,9 @@ class MainScreen(Frame):
 
         # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
         self.values = []
+        self.vrednosti = [0.5,1.0,1.5,2.,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.]
+        self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
+        self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
         self.za_evre()
 
         # naredi combo box za izbiro denarja na uro za dan
@@ -130,28 +133,71 @@ class MainScreen(Frame):
         self.dan.place(x=300, y=80)
         self.ure_dan = ttk.Combobox(self.frame, values=self.values, width=10)
         self.ure_dan.place(x=380, y=80)
+        self.ure_dan.current(87)
+
 
         # evri_ure['values'] = ('USA', 'Canada', 'Australia')
         # naredi combo box za nocne ure
         self.noc = Label(self.frame, text="Nocni denar", bg="steel blue")
         self.noc.place(x=470, y=80)
         self.ure_nocna = ttk.Combobox(self.frame, values=self.values, width=10)
-        self.ure_nocna.place(x=540, y=80)
+        self.ure_nocna.place(x=543, y=80)
+        self.ure_nocna.current(187)
+
+        # to je za ure pri dnevno nocnih vrednosti
+        self.fixno = Label(self.frame, text="Št. dnevnih ur", bg="steel blue")
+        self.fixno.place(x=300, y=110)
+        self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
+        self.fixne_ure.place(x=380, y=110)
 
 
-        # todo vstavi preostali dizajn
+        self.fixno = Label(self.frame, text="Št. nočnih ur", bg="steel blue")
+        self.fixno.place(x=470, y=110)
+        self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
+        self.fixne_ure.place(x=543, y=110)
+
+
+
+        # okno za fixne ure
+        self.fixno = Label(self.frame, text="Fixni denar", bg="steel blue")
+        self.fixno.place(x=300, y=140)
+        self.fixne_ure = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.fixne_ure.place(x=380, y=140)
+
+        self.fixno = Label(self.frame, text="Fixne ure", bg="steel blue")
+        self.fixno.place(x=470, y=140)
+
+
+        # izberi mesec in letoza izračun
+        self.mesec = ttk.Combobox(self.frame, values=self.meseci, width=10)
+        self.mesec.place(x=390, y=190)
+        self.leto = ttk.Combobox(self.frame, values=self.leta, width=10)
+        self.leto.place(x=480, y=190)
+
+        self.Izracun_meseci = Label(self.frame, text="Izračun: \nmesec-leto", bg="steel blue")
+        self.Izracun_meseci.place(x=300, y=182)
+
+        self.delbtn = Button(self.frame, text="Izracun", command=self.delete)
+        self.delbtn.place(x=580, y=190)
+
+        # todo vstai preostali dizajn
+
         # todo se za dnevne ure, pa gumb za izbiro leta in meseca da izračua zaslužen denar
 
 
         # gumb za izbrista vrstico iz listboxa
+
         self.delbtn = Button(self.frame, text="Delete", command=self.delete)
         self.delbtn.place(x=580, y=300)
 
 
     def delete(self):
         print("delete")
+        window = Toplevel(root)
 
         # -----------------
+
+
 
     def za_evre(self):
         a = 4.12
@@ -175,7 +221,7 @@ class MainScreen(Frame):
         listbox.configure(yscrollcommand=scroll.set)
         listbox.pack(side=LEFT, fill=Y)
         scroll.pack(side=LEFT, fill=Y)
-
+        # todo tukaj pride vrjetno koda za izpis iz datoteke
         for item in range(30):
             listbox.insert(END, item)
 

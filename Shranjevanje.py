@@ -42,6 +42,7 @@ class Shranjevanje:
         file = open("registracija.txt", "r")
         if os.stat("registracija.txt").st_size == 0:
             file.close()
+            print("kj je to")
             return False
 
         for line in file:
@@ -97,8 +98,10 @@ class Shranjevanje:
                 pravilen_line = new_line.split(",")
                 if pravilen_line[0] == username:
                     if self.check_password(pravilen_line[1], password) == True:
+                        file.close()
                         return True
                     else:
+                        file.close()
                         return False
 
         print("agsfd")
