@@ -104,10 +104,11 @@ class Shranjevanje:
                         file.close()
                         return False
 
-        print("agsfd")
+        print("ni pravi username ali password")
 
     def poglej_za_asci(self, besedilo):
         # ni fast, itak koga zanima
         return all(ord(c) < 128 for c in besedilo)
 
-# s = Shranjevanje()
+
+class

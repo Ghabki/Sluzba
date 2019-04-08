@@ -44,7 +44,10 @@ class LoginFrame(Frame):
         self.regbtn = Button(self, text="Register", command=self._register_btn_clicked)
         self.regbtn.grid(row=3, column=1, pady=2)
 
+        self.master.bind("<Return>", self._login_btn_clicked)
+
         self.pack()
+
 
     def _register_btn_clicked(self):
 
@@ -69,7 +72,7 @@ class LoginFrame(Frame):
                 self.besedilo.set("Uporabi samo ascii \n znake")
                 break
 
-    def _login_btn_clicked(self):
+    def _login_btn_clicked(self, event):
         # print("Clicked")
 
         while True:
