@@ -44,6 +44,7 @@ class LoginFrame(Frame):
         self.regbtn = Button(self, text="Register", command=self._register_btn_clicked)
         self.regbtn.grid(row=3, column=1, pady=2)
 
+        self.master.bind("<Button-1>", self._login_btn_clicked)
         self.master.bind("<Return>", self._login_btn_clicked)
 
         self.pack()
@@ -74,7 +75,7 @@ class LoginFrame(Frame):
 
     def _login_btn_clicked(self, event):
         # print("Clicked")
-
+        print("pressed", repr(event.char))
         while True:
             username = self.entry_username.get()
             password = self.entry_password.get()
