@@ -111,4 +111,4 @@ class Shranjevanje:
         return all(ord(c) < 128 for c in besedilo)
 
 
-class
+
