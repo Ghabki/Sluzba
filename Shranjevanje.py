@@ -9,6 +9,13 @@ class Shranjevanje:
         print("Ghabki the creator")
         self.x = 0
         self.rak = True
+        self.space = 0
+
+    def set_space(self, a):
+        self.space = a
+
+    def get_space(self):
+        return self.space
 
     def get_x(self):
         return self.x
@@ -64,24 +71,30 @@ class Shranjevanje:
     def registracija(self, username, password):
         zapis = open("registracija.txt", "a")
         preveri = self.search(username)
+
         asci_preverjanje = self.poglej_za_asci(username)
+        space_preverjanje = self.poglej_za_space(username)
 
-        if asci_preverjanje:
-            if preveri:
-                print("ze vsebuje ta username")
-                zapis.close()
-
-            elif not preveri:
-                print("registriran")
-                passwrd = self.hash_password(password)
-                zapis.write(username + "," + passwrd + "\n")
-                zapis.close()
-                self.set_ali_pravilen_ascii(True)  # ce je pravilen stavek se izvede to
-                print("asci true")
-        else:
-            self.set_ali_pravilen_ascii(False)  # ce je nepravilen se izvede to
-            print("ascii false")
+        if space_preverjanje:
             zapis.close()
+        else:
+            self.set_space(0)
+            if asci_preverjanje:
+                if preveri:
+                    print("ze vsebuje ta username")
+                    zapis.close()
+
+                elif not preveri:
+                    print("registriran")
+                    passwrd = self.hash_password(password)
+                    zapis.write(username + "," + passwrd + "\n")
+                    zapis.close()
+                    self.set_ali_pravilen_ascii(True)  # ce je pravilen stavek se izvede to
+                    print("asci true")
+            else:
+                self.set_ali_pravilen_ascii(False)  # ce je nepravilen se izvede to
+                print("ascii false")
+                zapis.close()
 
     def prijava(self, username, password):
         print("logging in")
@@ -110,5 +123,14 @@ class Shranjevanje:
         # ni fast, itak koga zanima
         return all(ord(c) < 128 for c in besedilo)
 
+    def poglej_za_space(self, ime):
+        if " " in ime or not ime:
+            print("no spaces or blank line")
+            self.set_space(1)
+            return True
+        else:
+            self.set_space(0)
+            print("sdhfgsfgh")
+            return False
 
 

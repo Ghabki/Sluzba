@@ -10,14 +10,17 @@ class LoginFrame(Frame):
     shra = Shranjevanje()
     shra.register_file()
 
-
     def __init__(self, master):
         super().__init__(master)
+        self.W = "300"
+        self.H = "105"
 
         self.master.resizable(False, False)
         # to sem js dodau
         self.master.title("My work h app")
-        self.master.geometry("300x105")
+        self.master.geometry(self.W+"x"+self.H)
+        self.center_window(int(self.W), int(self.H))
+
         self.master.iconbitmap(r"favicon.ico")
 
         self.label_username = Label(self, text="Username")
@@ -28,7 +31,7 @@ class LoginFrame(Frame):
         # string var za spreminjajoc se label
         self.besedilo = StringVar(self)
         self.update_label = Label(self.master, textvariable=self.besedilo)
-        self.update_label.place(x=10,y=55)
+        self.update_label.place(x=10, y=55)
 
         self.label_username.grid(row=0, sticky=E)
         self.label_password.grid(row=1, sticky=E)
@@ -44,11 +47,21 @@ class LoginFrame(Frame):
         self.regbtn = Button(self, text="Register", command=self._register_btn_clicked)
         self.regbtn.grid(row=3, column=1, pady=2)
 
-        self.master.bind("<Button-1>", self._login_btn_clicked)
+        # master za enter, za gumb pa more bit posebej cene zazna tudi ozadje za klik
         self.master.bind("<Return>", self._login_btn_clicked)
+        self.logbtn.bind("<Button-1>", self._login_btn_clicked)
 
         self.pack()
 
+    # nekako lahko to dam v drugi class sam mi itak nerabi, jebiga je pac 2x isto napisano
+    def center_window(self, w, h):
+        # get screen width and height
+        ws = root.winfo_screenwidth()
+        hs = root.winfo_screenheight()
+        # calculate position x, y
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 2)
+        root.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
     def _register_btn_clicked(self):
 
@@ -59,6 +72,11 @@ class LoginFrame(Frame):
             self.shra.registracija(username, password)
 
             asciii = self.shra.get_ali_pravilen_ascii()
+            space = self.shra.get_space()
+
+            if space == 1:
+                self.besedilo.set("Ime mora biti \n brez presledkov")
+                break
 
             if asciii:
                 rak = self.shra.get_x()
@@ -73,9 +91,9 @@ class LoginFrame(Frame):
                 self.besedilo.set("Uporabi samo ascii \n znake")
                 break
 
-    def _login_btn_clicked(self, event):
+    def _login_btn_clicked(self, event=None):
         # print("Clicked")
-        print("pressed", repr(event.char))
+        print("pressed")
         while True:
             username = self.entry_username.get()
             password = self.entry_password.get()
@@ -94,12 +112,18 @@ class LoginFrame(Frame):
 class MainScreen(Frame):
     def __init__(self, master):
         super().__init__(master)
+        self.W = "650"
+        self.H = "345"
 
         self.master.resizable(False, False)
         self.master.title("My work hour app")
-        self.master.geometry("650x345")
+        self.master.geometry(self.W+"x"+self.H)
+        self.center_window(int(self.W), int(self.H))
+
         self.master.iconbitmap(r"favicon.ico")
         self.master.configure(background='gray14')
+
+
         # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
 
@@ -167,42 +191,58 @@ class MainScreen(Frame):
 
         self.fixno = Label(self.frame, text="Fixne ure", bg="steel blue")
         self.fixno.place(x=470, y=140)
+        self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
+        self.fixne_ure.place(x=543, y=140)
+
+        # dodajanje v listbox gumb
+        self.add_button = Button(self.frame, text="Dodaj", command=self.delete)
+        self.add_button.place(x=380, y=172)
+        self.add_button.config( height=1, width=16)
 
         # izberi mesec in letoza izračun
-        self.mesec = ttk.Combobox(self.frame, values=self.meseci, width=10)
-        self.mesec.place(x=380, y=190)
-        self.leto = ttk.Combobox(self.frame, values=self.leta, width=10)
-        self.leto.place(x=470, y=190)
-
         self.Izracun_meseci = Label(self.frame, text="Izračun: \nmesec-leto", bg="steel blue")
-        self.Izracun_meseci.place(x=300, y=182)
+        self.Izracun_meseci.place(x=300, y=202)
 
-        self.delbtn = Button(self.frame, text="Izracun", command=self.delete)
-        self.delbtn.place(x=580, y=190)
+        self.mesec = ttk.Combobox(self.frame, values=self.meseci, width=10)
+        self.mesec.place(x=380, y=209)
+        self.leto = ttk.Combobox(self.frame, values=self.leta, width=10)
+        self.leto.place(x=470, y=209)
+
+        self.delbtn = Button(self.frame, text="Izracun", command=self.delete)  # todo nepozabi spremeniti tele funkcije
+        self.delbtn.place(x=580, y=208)
 
         # izpis plače
         self.Izracun_meseci = Label(self.frame, text="Plača: ", bg="steel blue")
-        self.Izracun_meseci.place(x=300, y=240)
-        self.placa = StringVar(self) # <---------------
-        self.update_label_placa = Label(self, textvariable=self.placa)
-        self.update_label_placa.place(x=400,y=240)
+        self.Izracun_meseci.place(x=300, y=250)
+        self.placa = StringVar(self)  # <---------------
+        self.update_label_placa = Label(self.frame, textvariable=self.placa)
+        self.update_label_placa.place(x=400, y=250)
 
         # izpis napak
-        self.placa = StringVar(self)  # <---------------
-        self.update_label_placa = Label(self, textvariable=self.placa)
-        self.update_label_placa.place(x=400, y=250)
+        self.napaka = StringVar(self)  # <---------------
+        # self.napaka.set("sdth")
+
+        self.update_label_napaka = Label(self.frame, textvariable=self.napaka)
+        self.update_label_napaka.place(x=300, y=300)
 
         # gumb za izbrista vrstico iz listboxa
 
         self.delbtn = Button(self.frame, text="Delete", command=self.delete)
         self.delbtn.place(x=580, y=300)
 
-
     def delete(self):
         print("delete")
         window = Toplevel(root)
 
         # -----------------
+    def center_window(self, w, h):
+        # get screen width and height
+        ws = root.winfo_screenwidth()
+        hs = root.winfo_screenheight()
+        # calculate position x, y
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 2)
+        root.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
     def za_evre(self):
         a = 4.12
