@@ -134,3 +134,8 @@ class Shranjevanje:
             return False
 
 
+class Settings:
+
+    def __init__(self):
+        pass
+

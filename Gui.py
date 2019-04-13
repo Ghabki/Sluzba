@@ -1,6 +1,6 @@
 from tkinter import *
 # from tkinter import ttk
-from Sluzba.shranjevanje import *
+from Sluzba.Shranjevanje import *
 from Sluzba.date_picker import *
 # from Sluzba.main import *
 
@@ -118,11 +118,10 @@ class MainScreen(Frame):
         self.master.resizable(False, False)
         self.master.title("My work hour app")
         self.master.geometry(self.W+"x"+self.H)
-        self.center_window(int(self.W), int(self.H))
+        # self.center_window(int(self.W), int(self.H))
 
         self.master.iconbitmap(r"favicon.ico")
         self.master.configure(background='gray14')
-
 
         # overrida kar naredi X button pri oknu
         self.master.protocol("WM_DELETE_WINDOW", self.exit_fix)
@@ -151,8 +150,8 @@ class MainScreen(Frame):
         self.izberi_DanNoc.place(x=320, y=50)
 
         # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
-        self.values = []
-        self.vrednosti = [0.5,1.0,1.5,2.,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.]
+        self.values_evri = []
+        self.vrednosti = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0]
         self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
         self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
         self.za_evre()
@@ -160,7 +159,7 @@ class MainScreen(Frame):
         # naredi combo box za izbiro denarja na uro za dan
         self.dan = Label(self.frame, text="Dnevni denar", bg="steel blue")
         self.dan.place(x=300, y=80)
-        self.ure_dan = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.ure_dan = ttk.Combobox(self.frame, values=self.values_evri, width=10)
         self.ure_dan.place(x=380, y=80)
         self.ure_dan.current(87)  # <------------------------- todo uporabi to za nastaviti željeno vrednost ob prijavi
 
@@ -168,7 +167,7 @@ class MainScreen(Frame):
         # naredi combo box za nocne ure
         self.noc = Label(self.frame, text="Nocni denar", bg="steel blue")
         self.noc.place(x=470, y=80)
-        self.ure_nocna = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.ure_nocna = ttk.Combobox(self.frame, values=self.values_evri, width=10)
         self.ure_nocna.place(x=543, y=80)
         self.ure_nocna.current(187)
 
@@ -186,7 +185,7 @@ class MainScreen(Frame):
         # okno za fixne ure
         self.fixno = Label(self.frame, text="Fixni denar", bg="steel blue")
         self.fixno.place(x=300, y=140)
-        self.fixne_ure = ttk.Combobox(self.frame, values=self.values, width=10)
+        self.fixne_ure = ttk.Combobox(self.frame, values=self.values_evri, width=10)
         self.fixne_ure.place(x=380, y=140)
 
         self.fixno = Label(self.frame, text="Fixne ure", bg="steel blue")
@@ -249,8 +248,8 @@ class MainScreen(Frame):
         for i in range(0, 250):
             a = a + 0.01
             a = round(a, 2)
-            self.values.insert(i, a)
-        print(self.values)
+            self.values_evri.insert(i, a)
+        print(self.values_evri)
 
     def lolek(self):
         # a = self.Datepicker.get()
