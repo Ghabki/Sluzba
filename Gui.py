@@ -129,6 +129,12 @@ class MainScreen(Frame):
         self.frame = Frame(self.master, width=345, background="steel blue")
         self.frame.pack(fill=X)
 
+        self.values_evri = []
+        self.vrednosti = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0]
+        self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
+        self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
+        self.za_evre()
+#----------------------------------------------------------------------------------------------------------------------
         # naredi listbox
         self.create_list_box()
 
@@ -150,11 +156,7 @@ class MainScreen(Frame):
         self.izberi_DanNoc.place(x=320, y=50)
 
         # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
-        self.values_evri = []
-        self.vrednosti = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0]
-        self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
-        self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
-        self.za_evre()
+
 
         # naredi combo box za izbiro denarja na uro za dan
         self.dan = Label(self.frame, text="Dnevni denar", bg="steel blue")

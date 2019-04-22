@@ -136,6 +136,41 @@ class Shranjevanje:
 
 class Settings:
 
-    def __init__(self):
+    def naredi_folder(self): # to naredi da naredi vse te file v en folder
         pass
+
+    def enkriptiranje(self): # mogoce enkrat ko se mi bo dalo
+        pass
+
+
+    def naredi_stings_file(self):
+        if os.path.isfile('settings.txt'):
+            print("file obstaja")
+        else:
+            open("settings.txt", "w+")
+            print("file ni obstajal in je bil narejen vi mapi kjer je program")
+
+    def shrani_v_file_fixno(self, username, fixni_denar, fixne_ure, datum):
+        pass
+
+    def shrani_v_file_dannoc(self, username, dan_denar, noc_denar, dan_ure, noc_ure, datum ):
+        pass
+
+
+
+
+    def Naredi_user_ure_file(self, user):
+        self.check_user(user)
+        pass
+
+    def check_user(self, uporabnik):
+        pass
+
+    def vrni_vrednosti(self, mesec, leto):
+        pass
+
+    def izbrisi_vrstico(self, index):
+        pass
+
+
 
