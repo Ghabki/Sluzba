@@ -1,6 +1,7 @@
 import os
 import uuid
 import hashlib
+import fileinput
 
 
 class Shranjevanje:
@@ -137,17 +138,28 @@ class Shranjevanje:
 class Settings:
 
     def naredi_folder(self): # to naredi da naredi vse te file v en folder
-        pass
+        if os.path.isdir("Settings"):
+            print("folder ok")
+        else:
+            os.makedirs("Settings")
+            print("folder narejen")
+
+        if os.path.isdir("Data"):
+            print("folder ok")
+        else:
+            os.makedirs("Data")
+            print("folder narejen")
+
 
     def enkriptiranje(self): # mogoce enkrat ko se mi bo dalo
         pass
 
 
     def naredi_stings_file(self):
-        if os.path.isfile('settings.txt'):
+        if os.path.isfile("Settings/settings.txt"):
             print("file obstaja")
         else:
-            open("settings.txt", "w+")
+            open("Settings/settings.txt", "w+")
             print("file ni obstajal in je bil narejen vi mapi kjer je program")
 
     def shrani_v_file_fixno(self, username, fixni_denar, fixne_ure, datum):
@@ -160,7 +172,6 @@ class Settings:
 
 
     def Naredi_user_ure_file(self, user):
-        self.check_user(user)
         pass
 
     def check_user(self, uporabnik):
@@ -169,8 +180,21 @@ class Settings:
     def vrni_vrednosti(self, mesec, leto):
         pass
 
-    def izbrisi_vrstico(self, index):
+    def izbrisi_vrstico(self, index, file_ime):
         pass
 
+    def izbrisi_blank_line(self, file_name):
+        print("rak")
+
+        # najbolse da naredis temp file napises noter vse brez praznih vrstic, nato zbrises in naredis novi isti file
+        # in zapises iz temp file  v novi file.
+
+
+
+
+
+
+a = Settings()
+a.izbrisi_blank_line(7)
 
 
