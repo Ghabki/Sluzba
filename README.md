@@ -12,3 +12,7 @@ polovico datotek je neuporabnih, tam so samo zato da preiskusim kej....
 
 
 glavni file za zagnat je Gui.py
+
+
+
+malo sem pavzirav ker se mi ne da 
