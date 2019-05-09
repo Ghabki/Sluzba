@@ -11,6 +11,7 @@ class Shranjevanje:
         self.x = 0
         self.rak = True
         self.space = 0
+        global vraca_name
 
     def set_space(self, a):
         self.space = a
@@ -25,10 +26,13 @@ class Shranjevanje:
         self.x = y
 
     def set_ali_pravilen_ascii(self, omg):
-        self. rak = omg
+        self.rak = omg
 
     def get_ali_pravilen_ascii(self):
         return self.rak
+
+
+
 
     def hash_password(self, password):
         # uuid is used to generate a random number
@@ -40,15 +44,22 @@ class Shranjevanje:
         return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
     def register_file(self):
-        if os.path.isfile('registracija.txt'):
+
+        if os.path.isdir("Registracija"):
+            print("directory ok")
+        else:
+            os.mkdir("Registracija")
+            print("Folder narejen")
+
+        if os.path.isfile("registracija/Registracija.txt"):
             print("file obstaja")
         else:
-            open("registracija.txt", "w+")
+            open("registracija/Registracija.txt", "w+")
             print("file ni obstajal in je bil narejen vi mapi kjer je program")
 
     def search(self, username):
-        file = open("registracija.txt", "r")
-        if os.stat("registracija.txt").st_size == 0:
+        file = open("registracija/Registracija.txt", "r")
+        if os.stat("registracija/Registracija.txt").st_size == 0:
             file.close()
             print("kj je to")
             return False
@@ -70,7 +81,7 @@ class Shranjevanje:
         return False
 
     def registracija(self, username, password):
-        zapis = open("registracija.txt", "a")
+        zapis = open("registracija/Registracija.txt", "a")
         preveri = self.search(username)
 
         asci_preverjanje = self.poglej_za_asci(username)
@@ -101,9 +112,9 @@ class Shranjevanje:
         print("logging in")
 
         if self.search(username) == True:
-            file = open("registracija.txt", "r")
+            file = open("registracija/Registracija.txt", "r")
 
-            if os.stat("registracija.txt").st_size == 0:
+            if os.stat("registracija/Registracija.txt").st_size == 0:
                 file.close()
                 return False
 
@@ -134,26 +145,38 @@ class Shranjevanje:
             print("sdhfgsfgh")
             return False
 
+    def create_new_folder_file(self, ime_datoteke):
+
+        if os.path.isdir("Profile_data"):
+            print("profile data folder ok")
+        else:
+            os.makedirs("Profile_data")
+            print("Profile data folder narejen")
+
+        if os.path.isfile("Profile_data/"+ime_datoteke+".txt"):
+            print("profile FILE  ok")
+        else:
+            open("Profile_data/"+ime_datoteke+".txt", "a")
+            print("Profile data folder narejen")
+
+
+def get_username(self):
+    return self.vraca_name
+
+
+def set_username(self, name):
+    self.vraca_name = name
+
+
+
+
+
 
 class Settings:
-
-    def naredi_folder(self): # to naredi da naredi vse te file v en folder
-        if os.path.isdir("Settings"):
-            print("folder ok")
-        else:
-            os.makedirs("Settings")
-            print("folder narejen")
-
-        if os.path.isdir("Data"):
-            print("folder ok")
-        else:
-            os.makedirs("Data")
-            print("folder narejen")
 
 
     def enkriptiranje(self): # mogoce enkrat ko se mi bo dalo
         pass
-
 
     def naredi_stings_file(self):
         if os.path.isfile("Settings/settings.txt"):
@@ -167,8 +190,6 @@ class Settings:
 
     def shrani_v_file_dannoc(self, username, dan_denar, noc_denar, dan_ure, noc_ure, datum ):
         pass
-
-
 
 
     def Naredi_user_ure_file(self, user):

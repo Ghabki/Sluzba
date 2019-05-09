@@ -2,13 +2,18 @@ from tkinter import *
 # from tkinter import ttk
 from Sluzba.Shranjevanje import *
 from Sluzba.date_picker import *
+
+
 # from Sluzba.main import *
 
 
-
+data = ""
 class LoginFrame(Frame):
     shra = Shranjevanje()
     shra.register_file()
+
+
+
 
     def __init__(self, master):
         super().__init__(master)
@@ -21,7 +26,7 @@ class LoginFrame(Frame):
         self.master.geometry(self.W+"x"+self.H)
         self.center_window(int(self.W), int(self.H))
 
-        self.master.iconbitmap(r"favicon.ico")
+        self.master.iconbitmap(r"Resources\favicon.ico")
 
         self.label_username = Label(self, text="Username")
         self.label_password = Label(self, text="Password")
@@ -85,6 +90,7 @@ class LoginFrame(Frame):
                     break
                 elif rak == 0:
                     self.besedilo.set("Registriran")
+                    self.shra.create_new_folder_file(username)
                     break
                 break
             else:
@@ -99,28 +105,32 @@ class LoginFrame(Frame):
             password = self.entry_password.get()
 
             if self.shra.prijava(username, password):
+                set_username(self, username)
                 # NEVEM KAKO TO DELA NEVEM ZAKAJ TO DELA NEVEM ZAKAJ JE TO TAKO RAKAVO!!
                 self.master.withdraw()
                 self.glavno_okno = Toplevel(self.master)
-                MainScreen(self.glavno_okno)
+                MainScreen(self.glavno_okno, username)
                 break
             else:
                 self.besedilo.set("Napačni username \n ali geslo")
                 break
 
 
-class MainScreen(Frame):
-    def __init__(self, master):
+class MainScreen(Frame, ):
+    def __init__(self, master, glavno_ime):
         super().__init__(master)
         self.W = "650"
         self.H = "345"
+
+        # magic iz prejsnjega classa ko se poklice ka class enostavno potrebuje da se noter da ime
+        self.glavno_ime = glavno_ime
 
         self.master.resizable(False, False)
         self.master.title("My work hour app")
         self.master.geometry(self.W+"x"+self.H)
         # self.center_window(int(self.W), int(self.H))
 
-        self.master.iconbitmap(r"favicon.ico")
+        self.master.iconbitmap(r"Resources\favicon.ico")
         self.master.configure(background='gray14')
 
         # overrida kar naredi X button pri oknu
@@ -134,7 +144,7 @@ class MainScreen(Frame):
         self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
         self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
         self.za_evre()
-#----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
         # naredi listbox
         self.create_list_box()
 
@@ -156,7 +166,6 @@ class MainScreen(Frame):
         self.izberi_DanNoc.place(x=320, y=50)
 
         # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
-
 
         # naredi combo box za izbiro denarja na uro za dan
         self.dan = Label(self.frame, text="Dnevni denar", bg="steel blue")
@@ -196,9 +205,9 @@ class MainScreen(Frame):
         self.fixne_ure.place(x=543, y=140)
 
         # dodajanje v listbox gumb
-        self.add_button = Button(self.frame, text="Dodaj", command=self.delete)
+        self.add_button = Button(self.frame, text="Dodaj", command=self.dodaj_delo)
         self.add_button.place(x=380, y=172)
-        self.add_button.config( height=1, width=16)
+        self.add_button.config(height=1, width=16)
 
         # izberi mesec in letoza izračun
         self.Izracun_meseci = Label(self.frame, text="Izračun: \nmesec-leto", bg="steel blue")
@@ -274,6 +283,13 @@ class MainScreen(Frame):
         print("destroyed")
         root.destroy()
 
+    def dodaj_delo(self):
+        print(self.glavno_ime)
+
+        datoteka = open("Profile_data/" + self.glavno_ime + ".txt")
+
+
+    # to bo koda za dodanjanje v file
 
 if __name__ == '__main__':
     root = Tk()
