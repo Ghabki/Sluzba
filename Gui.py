@@ -120,6 +120,7 @@ class LoginFrame(Frame):
 
 class MainScreen(Frame, ):
     shra = Shranjevanje()
+
     def __init__(self, master, glavno_ime):
         super().__init__(master)
         self.W = "650"
@@ -285,9 +286,19 @@ class MainScreen(Frame, ):
         listbox.configure(yscrollcommand=scroll.set)
         listbox.pack(side=LEFT, fill=Y)
         scroll.pack(side=LEFT, fill=Y)
-        # todo tukaj pride vrjetno koda za izpis iz datoteke
-        for item in range(30):
-            listbox.insert(END, item)
+
+
+        data = open("Profile_data/" + self.glavno_ime + ".txt", "r")
+        for x in data:
+            #todo naredi kako da se itpisejo na list box vrednosti
+
+
+            listbox.insert(0, x)
+        data.close()
+
+
+
+
 
 
 
@@ -315,6 +326,8 @@ class MainScreen(Frame, ):
                 print("pratno polje")
             else:
                 datoteka.write(datum + " " + day_ure + " " + day_mony + " " + night_ure + " " + night_mony + "\n")
+
+
                 print("napisano v file")
                 self.napaka.set("Shranjeno v file")
         else:
