@@ -1,5 +1,7 @@
 from tkinter import *
 # from tkinter import ttk
+from tkinter.ttk import Combobox
+
 from Sluzba.Shranjevanje import *
 from Sluzba.date_picker import *
 
@@ -7,7 +9,7 @@ from Sluzba.date_picker import *
 # from Sluzba.main import *
 
 
-data = ""
+
 class LoginFrame(Frame):
     shra = Shranjevanje()
     shra.register_file()
@@ -117,6 +119,7 @@ class LoginFrame(Frame):
 
 
 class MainScreen(Frame, ):
+    shra = Shranjevanje()
     def __init__(self, master, glavno_ime):
         super().__init__(master)
         self.W = "650"
@@ -144,30 +147,34 @@ class MainScreen(Frame, ):
         self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
         self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
         self.za_evre()
+
+        self.checkbox_izbira = Tkinter.IntVar()
 # ----------------------------------------------------------------------------------------------------------------------
         # naredi listbox
         self.create_list_box()
-
-        # -----------------
+# ----------------------------------------------------------------------------------------------------------------------
         # naredi lable da lahko izbereš datum
         self.izbira_datuma = Label(self.frame, text="Pričetek dela", bg="steel blue")
         self.izbira_datuma.place(x=300, y=20)
 
-        self.nice = Datepicker(self.frame)
-        self.nice.place(x=380, y=20)
+        self.datum_window = Datepicker(self.frame)
+        self.datum_window.place(x=380, y=20)
+# ----------------------------------------------------------------------------------------------------------------------
 
         # naredi check button da si zapomne izbire za ta username
         self.zapomni_izbiro = Checkbutton(self.frame, text="Zapomni si izbire", bg="steel blue", activebackground="steel blue")
         self.zapomni_izbiro.place(x=530, y=18)
+# ----------------------------------------------------------------------------------------------------------------------
 
         # naredi check box za to da ce zelis imeti fixne ure ali dnevne pa nocne
         self.izberi_DanNoc = Checkbutton(self.frame, text="Izbira dnevna in nočna", bg="steel blue",
-                                          activebackground="steel blue")
+                                          activebackground="steel blue", variable=self.checkbox_izbira)
         self.izberi_DanNoc.place(x=320, y=50)
+# ----------------------------------------------------------------------------------------------------------------------
 
-        # v tabelo spravi vrednosti za evre da se izpisejo v comboboxu
 
         # naredi combo box za izbiro denarja na uro za dan
+
         self.dan = Label(self.frame, text="Dnevni denar", bg="steel blue")
         self.dan.place(x=300, y=80)
         self.ure_dan = ttk.Combobox(self.frame, values=self.values_evri, width=10)
@@ -183,31 +190,34 @@ class MainScreen(Frame, ):
         self.ure_nocna.current(187)
 
         # to je za ure pri dnevno nocnih vrednosti
-        self.fixno = Label(self.frame, text="Št. dnevnih ur", bg="steel blue")
-        self.fixno.place(x=300, y=110)
-        self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
-        self.fixne_ure.place(x=380, y=110)
+        self.dan_denar = Label(self.frame, text="Št. dnevnih ur", bg="steel blue")
+        self.dan_denar.place(x=300, y=110)
+        self.denar_dan = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
+        self.denar_dan.place(x=380, y=110)
 
-        self.fixno = Label(self.frame, text="Št. nočnih ur", bg="steel blue")
-        self.fixno.place(x=470, y=110)
-        self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
-        self.fixne_ure.place(x=543, y=110)
+        self.noc_denar = Label(self.frame, text="Št. nočnih ur", bg="steel blue")
+        self.noc_denar.place(x=470, y=110)
+        self.denar_noc = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
+        self.denar_noc.place(x=543, y=110)
+# ----------------------------------------------------------------------------------------------------------------------
 
         # okno za fixne ure
         self.fixno = Label(self.frame, text="Fixni denar", bg="steel blue")
         self.fixno.place(x=300, y=140)
-        self.fixne_ure = ttk.Combobox(self.frame, values=self.values_evri, width=10)
-        self.fixne_ure.place(x=380, y=140)
+        self.fixne_denar = ttk.Combobox(self.frame, values=self.values_evri, width=10)
+        self.fixne_denar.place(x=380, y=140)
 
         self.fixno = Label(self.frame, text="Fixne ure", bg="steel blue")
         self.fixno.place(x=470, y=140)
         self.fixne_ure = ttk.Combobox(self.frame, values=self.vrednosti, width=10)
         self.fixne_ure.place(x=543, y=140)
+# ----------------------------------------------------------------------------------------------------------------------
 
         # dodajanje v listbox gumb
         self.add_button = Button(self.frame, text="Dodaj", command=self.dodaj_delo)
         self.add_button.place(x=380, y=172)
         self.add_button.config(height=1, width=16)
+# ----------------------------------------------------------------------------------------------------------------------
 
         # izberi mesec in letoza izračun
         self.Izracun_meseci = Label(self.frame, text="Izračun: \nmesec-leto", bg="steel blue")
@@ -228,23 +238,24 @@ class MainScreen(Frame, ):
         self.update_label_placa = Label(self.frame, textvariable=self.placa)
         self.update_label_placa.place(x=400, y=250)
 
+# ----------------------------------------------------------------------------------------------------------------------
+
         # izpis napak
         self.napaka = StringVar(self)  # <---------------
         # self.napaka.set("sdth")
 
-        self.update_label_napaka = Label(self.frame, textvariable=self.napaka)
+        self.update_label_napaka = Label(self.frame, textvariable=self.napaka, bg="steel blue")
         self.update_label_napaka.place(x=300, y=300)
 
-        # gumb za izbrista vrstico iz listboxa
 
+# ----------------------------------------------------------------------------------------------------------------------
+        # gumb za izbrista vrstico iz listboxa
         self.delbtn = Button(self.frame, text="Delete", command=self.delete)
         self.delbtn.place(x=580, y=300)
+# ----------------------------------------------------------------------------------------------------------------------
 
-    def delete(self):
-        print("delete")
-        window = Toplevel(root)
 
-        # -----------------
+
     def center_window(self, w, h):
         # get screen width and height
         ws = root.winfo_screenwidth()
@@ -262,10 +273,10 @@ class MainScreen(Frame, ):
             self.values_evri.insert(i, a)
         print(self.values_evri)
 
-    def lolek(self):
-        # a = self.Datepicker.get()
-        print("fdshgsghdf")
-        print(self.nice.current_text)
+    @staticmethod
+    def exit_fix():
+        print("destroyed")
+        root.destroy()
 
     def create_list_box(self):
         listbox = Listbox(self.frame, height=21, width=30, selectmode=SINGLE, font="14")
@@ -278,20 +289,58 @@ class MainScreen(Frame, ):
         for item in range(30):
             listbox.insert(END, item)
 
-    @staticmethod
-    def exit_fix():
-        print("destroyed")
-        root.destroy()
+
+
+
+    def lolek(self):
+        # a = self.Datepicker.get()
+        print("fdshgsghdf")
+        print(self.datum_window.current_text)
 
     def dodaj_delo(self):
-        print(self.glavno_ime)
 
-        datoteka = open("Profile_data/" + self.glavno_ime + ".txt")
+        self.shra.create_new_folder_file(self.glavno_ime)
+        # datoteka.write(name + "\n")
+        datoteka = open("Profile_data/" + self.glavno_ime + ".txt", "a")
 
+        if self.checkbox_izbira.get() == 1:
+            datum = self.datum_window.get()
+            day_ure = self.ure_dan.get()
+            day_mony = self.denar_dan.get()
+            night_ure = self.ure_nocna.get()
+            night_mony = self.denar_noc.get()
 
-    # to bo koda za dodanjanje v file
+            if datum == "" or day_ure == "" or day_mony == "" or night_ure == "" or night_mony == "":
+                self.napaka.set("Prazno polje!!!")
+                print("pratno polje")
+            else:
+                datoteka.write(datum + " " + day_ure + " " + day_mony + " " + night_ure + " " + night_mony + "\n")
+                print("napisano v file")
+                self.napaka.set("Shranjeno v file")
+        else:
+            datum = self.datum_window.get()
+            ure = self.fixne_ure.get()
+            denar_fix = self.fixne_denar.get()
+
+            if datum == "" or ure == "" or denar_fix == "":
+                self.napaka.set("Prazno polje!!!")
+                print("prazno polje")
+            else:
+                datoteka.write(datum + " " + ure + " " + denar_fix + "\n")
+                print("napisano v file")
+                self.napaka.set("Shranjeno v file")
+
+            print(datum+" "+ure+" "+denar_fix)
+        datoteka.close()
+
+    def delete(self):
+        #koda za izbris necesa v filu
+        print("delete")
+        # window = Toplevel(root)
+
 
 if __name__ == '__main__':
     root = Tk()
     prvo_okno = LoginFrame(root)
+
     root.mainloop()
