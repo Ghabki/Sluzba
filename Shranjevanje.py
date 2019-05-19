@@ -31,9 +31,6 @@ class Shranjevanje:
     def get_ali_pravilen_ascii(self):
         return self.rak
 
-
-
-
     def hash_password(self, password):
         # uuid is used to generate a random number
         salt = uuid.uuid4().hex
@@ -70,7 +67,7 @@ class Shranjevanje:
 
             if pravilen_line[0] == username:  # da vsebuje ze noter
                 self.set_x(1)
-                print("koj k")
+                print("iskanje vredu")
                 file.close()
                 return True
             else:  # ne vseebuje noter
@@ -166,56 +163,3 @@ def get_username(self):
 
 def set_username(self, name):
     self.vraca_name = name
-
-
-
-
-
-
-class Settings:
-
-
-    def enkriptiranje(self): # mogoce enkrat ko se mi bo dalo
-        pass
-
-    def naredi_stings_file(self):
-        if os.path.isfile("Settings/settings.txt"):
-            print("file obstaja")
-        else:
-            open("Settings/settings.txt", "w+")
-            print("file ni obstajal in je bil narejen vi mapi kjer je program")
-
-    def shrani_v_file_fixno(self, username, fixni_denar, fixne_ure, datum):
-        pass
-
-    def shrani_v_file_dannoc(self, username, dan_denar, noc_denar, dan_ure, noc_ure, datum ):
-        pass
-
-
-    def Naredi_user_ure_file(self, user):
-        pass
-
-    def check_user(self, uporabnik):
-        pass
-
-    def vrni_vrednosti(self, mesec, leto):
-        pass
-
-    def izbrisi_vrstico(self, index, file_ime):
-        pass
-
-    def izbrisi_blank_line(self, file_name):
-        print("rak")
-
-        # najbolse da naredis temp file napises noter vse brez praznih vrstic, nato zbrises in naredis novi isti file
-        # in zapises iz temp file  v novi file.
-
-
-
-
-
-
-a = Settings()
-a.izbrisi_blank_line(7)
-
-

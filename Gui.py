@@ -4,18 +4,11 @@ from tkinter.ttk import Combobox
 
 from Sluzba.Shranjevanje import *
 from Sluzba.date_picker import *
-
-
 # from Sluzba.main import *
-
-
 
 class LoginFrame(Frame):
     shra = Shranjevanje()
     shra.register_file()
-
-
-
 
     def __init__(self, master):
         super().__init__(master)
@@ -101,7 +94,7 @@ class LoginFrame(Frame):
 
     def _login_btn_clicked(self, event=None):
         # print("Clicked")
-        print("pressed")
+        print("login_btn pressed")
         while True:
             username = self.entry_username.get()
             password = self.entry_password.get()
@@ -144,6 +137,8 @@ class MainScreen(Frame, ):
         self.frame.pack(fill=X)
 
         self.values_evri = []
+        self.meseci_dic = {"Januar": "01", "Februar": "02","Marec": "03","April": "04","Maj": "05","Junij": "06",
+                    "Julij": "07","August": "08","September": "09","Oktober": "10","November": "11","December": "12",}
         self.vrednosti = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0]
         self.meseci = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "August","September","Oktober", "November", "December"]
         self.leta = ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"]
@@ -172,7 +167,6 @@ class MainScreen(Frame, ):
                                           activebackground="steel blue", variable=self.checkbox_izbira)
         self.izberi_DanNoc.place(x=320, y=50)
 # ----------------------------------------------------------------------------------------------------------------------
-
 
         # naredi combo box za izbiro denarja na uro za dan
 
@@ -229,14 +223,14 @@ class MainScreen(Frame, ):
         self.leto = ttk.Combobox(self.frame, values=self.leta, width=10)
         self.leto.place(x=470, y=209)
 
-        self.delbtn = Button(self.frame, text="Izracun", command=self.delete)  # todo nepozabi spremeniti tele funkcije
-        self.delbtn.place(x=580, y=208)
+        self.izrac_buton = Button(self.frame, text="Izracun", command=self.izracun)
+        self.izrac_buton.place(x=580, y=208)
 
         # izpis plače
         self.Izracun_meseci = Label(self.frame, text="Plača: ", bg="steel blue")
         self.Izracun_meseci.place(x=300, y=250)
         self.placa = StringVar(self)  # <---------------
-        self.update_label_placa = Label(self.frame, textvariable=self.placa)
+        self.update_label_placa = Label(self.frame,bg="steel blue", textvariable=self.placa)
         self.update_label_placa.place(x=400, y=250)
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -248,14 +242,11 @@ class MainScreen(Frame, ):
         self.update_label_napaka = Label(self.frame, textvariable=self.napaka, bg="steel blue")
         self.update_label_napaka.place(x=300, y=300)
 
-
 # ----------------------------------------------------------------------------------------------------------------------
         # gumb za izbrista vrstico iz listboxa
         self.delbtn = Button(self.frame, text="Delete", command=self.delete)
         self.delbtn.place(x=580, y=300)
 # ----------------------------------------------------------------------------------------------------------------------
-
-
 
     def center_window(self, w, h):
         # get screen width and height
@@ -280,33 +271,20 @@ class MainScreen(Frame, ):
         root.destroy()
 
     def create_list_box(self):
-        listbox = Listbox(self.frame, height=21, width=30, selectmode=SINGLE, font="14")
-        scroll = Scrollbar(self.frame, command=listbox.yview)
+        self.listbox = Listbox(self.frame, height=21, width=30, selectmode=SINGLE, font="14")
+        self.scroll = Scrollbar(self.frame, command=self.listbox.yview)
 
-        listbox.configure(yscrollcommand=scroll.set)
-        listbox.pack(side=LEFT, fill=Y)
-        scroll.pack(side=LEFT, fill=Y)
+        self.listbox.configure(yscrollcommand=self.scroll.set)
+        self.listbox.pack(side=LEFT, fill=Y)
+        self.scroll.pack(side=LEFT, fill=Y)
 
 
         data = open("Profile_data/" + self.glavno_ime + ".txt", "r")
         for x in data:
             #todo naredi kako da se itpisejo na list box vrednosti
 
-
-            listbox.insert(0, x)
+            self.listbox.insert(0, x)
         data.close()
-
-
-
-
-
-
-
-
-    def lolek(self):
-        # a = self.Datepicker.get()
-        print("fdshgsghdf")
-        print(self.datum_window.current_text)
 
     def dodaj_delo(self):
 
@@ -325,9 +303,8 @@ class MainScreen(Frame, ):
                 self.napaka.set("Prazno polje!!!")
                 print("pratno polje")
             else:
-                datoteka.write(datum + " " + day_ure + " " + day_mony + " " + night_ure + " " + night_mony + "\n")
-
-
+                datoteka.write(datum + " " + day_ure + "h " + day_mony + "€<><> " + night_ure + "h " + night_mony + "€\n")
+                self.listbox.insert(0, datum + " " + day_ure + "h " + day_mony + "€<><> " + night_ure + "h " + night_mony + "€\n")
                 print("napisano v file")
                 self.napaka.set("Shranjeno v file")
         else:
@@ -339,12 +316,24 @@ class MainScreen(Frame, ):
                 self.napaka.set("Prazno polje!!!")
                 print("prazno polje")
             else:
-                datoteka.write(datum + " " + ure + " " + denar_fix + "\n")
+                datoteka.write(datum + " H= " + ure + " €= " + denar_fix + "\n")
+                self.listbox.insert(0, datum + " H= " + ure + " €= " + denar_fix + "\n")
                 print("napisano v file")
                 self.napaka.set("Shranjeno v file")
 
             print(datum+" "+ure+" "+denar_fix)
         datoteka.close()
+
+    def izracun(self):
+        podatki = open("Profile_data/" + self.glavno_ime + ".txt", "r")
+        leto_ses = int(self.leto.get())
+        mesec_ses = self.mesec.get()
+
+        if leto_ses == "" or mesec_ses == "":
+            self.napaka.set("Nisi izbral meseca in leta za izracun")
+            print("Nisi izbral meseca in leta za izracun")
+        else:
+            pass
 
     def delete(self):
         #koda za izbris necesa v filu
@@ -355,5 +344,4 @@ class MainScreen(Frame, ):
 if __name__ == '__main__':
     root = Tk()
     prvo_okno = LoginFrame(root)
-
     root.mainloop()
