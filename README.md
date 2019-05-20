@@ -5,7 +5,7 @@ Daily hour and money tracking aplication. I made this aplication mainly for me a
 [Photo of the aplication](https://ibb.co/PmdjBzG)
 
 ### How to use
-- [Link toexe file](https://github.com/Ghabki/Sluzba_exe/tree/master)
+- [Link to exe file](https://github.com/Ghabki/Sluzba_exe/tree/master)
 -
 - Pick the date
 - Choose if you have day/night hours or normal day hours (checkbox)
