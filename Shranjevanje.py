@@ -139,7 +139,7 @@ class Shranjevanje:
             return True
         else:
             self.set_space(0)
-            print("sdhfgsfgh")
+            print("OK--ne vsebuje presledkov")
             return False
 
     def create_new_folder_file(self, ime_datoteke):
