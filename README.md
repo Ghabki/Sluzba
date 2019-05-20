@@ -18,7 +18,7 @@ Daily hour and money tracking aplication. I made this aplication mainly for me a
 - Gui.py is main file
 - 
 
-![alt text](https://ibb.co/PmdjBzG)
+![alt text](https://imgur.com/a/czzHeLC)
 
 
 
