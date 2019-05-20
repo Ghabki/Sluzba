@@ -1,8 +1,12 @@
 ### Description
 Daily hour and money tracking aplication. I made this aplication mainly for me and students (because of the flexible work hours).
 
+### Photo
+[Photo of the aplication](https://ibb.co/PmdjBzG)
 
 ### How to use
+- [Link toexe file]()
+-
 - Pick the date
 - Choose if you have day/night hours or normal day hours (checkbox)
 - Select hours worked and €/h
@@ -16,9 +20,9 @@ Daily hour and money tracking aplication. I made this aplication mainly for me a
 - In the future I will translate to english
 - Date_picker code is not mine
 - Gui.py is main file
-- 
 
-![alt text](https://imgur.com/a/czzHeLC)
+
+
 
 
 
