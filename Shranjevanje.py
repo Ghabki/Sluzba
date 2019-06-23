@@ -1,7 +1,6 @@
 import os
 import uuid
 import hashlib
-import fileinput
 
 
 class Shranjevanje:
@@ -11,6 +10,8 @@ class Shranjevanje:
         self.x = 0
         self.rak = True
         self.space = 0
+
+        #to global nebi rablo, lahko bi samo klicau spremenljivko z objektom
         global vraca_name
 
     def set_space(self, a):
@@ -42,21 +43,21 @@ class Shranjevanje:
 
     def register_file(self):
 
-        if os.path.isdir("Registracija"):
+        if os.path.isdir("Reg_data"):
             print("directory ok")
         else:
-            os.mkdir("Registracija")
+            os.mkdir("Reg_data")
             print("Folder narejen")
 
-        if os.path.isfile("registracija/Registracija.txt"):
+        if os.path.isfile("Reg_data/Reg_data.txt"):
             print("file obstaja")
         else:
-            open("registracija/Registracija.txt", "w+")
+            open("Reg_data/Reg_data.txt", "w+")
             print("file ni obstajal in je bil narejen vi mapi kjer je program")
 
     def search(self, username):
-        file = open("registracija/Registracija.txt", "r")
-        if os.stat("registracija/Registracija.txt").st_size == 0:
+        file = open("Reg_data/Reg_data.txt", "r")
+        if os.stat("Reg_data/Reg_data.txt").st_size == 0:
             file.close()
             print("kj je to")
             return False
@@ -78,7 +79,7 @@ class Shranjevanje:
         return False
 
     def registracija(self, username, password):
-        zapis = open("registracija/Registracija.txt", "a")
+        zapis = open("Reg_data/Reg_data.txt", "a")
         preveri = self.search(username)
 
         asci_preverjanje = self.poglej_za_asci(username)
@@ -109,9 +110,9 @@ class Shranjevanje:
         print("logging in")
 
         if self.search(username) == True:
-            file = open("registracija/Registracija.txt", "r")
+            file = open("Reg_data/Reg_data.txt", "r")
 
-            if os.stat("registracija/Registracija.txt").st_size == 0:
+            if os.stat("Reg_data/Reg_data.txt").st_size == 0:
                 file.close()
                 return False
 
@@ -156,7 +157,7 @@ class Shranjevanje:
             open("Profile_data/"+ime_datoteke+".txt", "a")
             print("Profile data folder narejen")
 
-
+#nebi bilo potrebno>
 def get_username(self):
     return self.vraca_name
 
