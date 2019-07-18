@@ -146,8 +146,8 @@ class MainScreen(Frame):
         self.velikost = ("calibri", 13, 'bold')
         self.za_evre()
 
-        self.checkbox_izbira = Tkinter.IntVar()
-        self.checkbox_izbira_dva = Tkinter.IntVar()
+        self.checkbox_izbira = IntVar()
+        self.checkbox_izbira_dva = IntVar()
 # ----------------------------------------------------------------------------------------------------------------------
         # naredi listbox
         self.create_list_box()
@@ -309,6 +309,7 @@ class MainScreen(Frame):
     def dodaj_delo(self):
 
         self.shra.create_new_folder_file(self.glavno_ime)
+        
         # datoteka.write(name + "\n")
         datoteka = open("Profile_data/" + self.glavno_ime + ".txt", "a")
 
@@ -352,7 +353,7 @@ class MainScreen(Frame):
         koncni_rezultat = 0
 
         if leto_ses == "" or mesec_ses == "":
-            self.napaka.set("Apply month and year to calculate")
+            self.napaka("Apply month and year to calculate")
             print("Nisi izbral meseca in leta za izracun")
         else:
 
