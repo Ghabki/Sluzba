@@ -1,7 +1,7 @@
 import os
 import uuid
-import hashlib
-
+import hashlib 
+vraca_name = None
 
 class Shranjevanje:
 
@@ -26,11 +26,11 @@ class Shranjevanje:
     def set_x(self, y):
         self.x = y
 
-    def set_ali_pravilen_ascii(self, omg):
-        self.rak = omg
+    def set_ali_pravilen_ascii(self, set_true_or_false):
+        self.ascii_check = set_true_or_false
 
     def get_ali_pravilen_ascii(self):
-        return self.rak
+        return self.ascii_check
 
     def hash_password(self, password):
         # uuid is used to generate a random number
@@ -42,37 +42,50 @@ class Shranjevanje:
         return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
     def register_file(self):
+        try:
 
-        if os.path.isdir("Reg_data"):
-            print("directory ok")
-        else:
-            os.mkdir("Reg_data")
-            print("Folder narejen")
+            if os.path.isdir("Reg_data"):
+                print("directory ok")
+            else:
+                os.mkdir("Reg_data")
+                print("Folder narejen")
 
-        if os.path.isfile("Reg_data/Reg_data.txt"):
-            print("file obstaja")
-        else:
-            open("Reg_data/Reg_data.txt", "w+")
-            print("file ni obstajal in je bil narejen vi mapi kjer je program")
+            if os.path.isfile("Reg_data/Reg_data.txt"):
+                print("file obstaja")
+            else:
+                open("Reg_data/Reg_data.txt", "w+")
+                print("file ni obstajal in je bil narejen vi mapi kjer je program")
+        except:
+            print("Neki se zalomlo pri kreiranju map")
 
     def search(self, username):
-        file = open("Reg_data/Reg_data.txt", "r")
-        if os.stat("Reg_data/Reg_data.txt").st_size == 0:
+        
+        try:
+            file = open("Reg_data/Reg_data.txt", "r")
+        except:
             file.close()
-            print("kj je to")
-            return False
+            print("Za odpret file se je zalomlo")
 
-        for line in file:
-            new_line = line.rstrip()
-            pravilen_line = new_line.split(",")
-
-            if pravilen_line[0] == username:  # da vsebuje ze noter
-                self.set_x(1)
-                print("iskanje vredu")
+        try:    
+            if os.stat("Reg_data/Reg_data.txt").st_size == 0:
                 file.close()
-                return True
-            else:  # ne vseebuje noter
-                continue
+                print("kj je to")
+                return False
+
+            for line in file:
+                new_line = line.rstrip()
+                pravilen_line = new_line.split(",")
+
+                if pravilen_line[0] == username:  # da vsebuje ze noter
+                    self.set_x(1)
+                    print("iskanje vredu")
+                    file.close()
+                    return True
+                else:  # ne vseebuje noter
+                    continue
+        except:
+            print("neki se zalomlo pri branju file")
+            file.close()           
 
         self.set_x(0)
         file.close()
