@@ -90,6 +90,7 @@ class LoginFrame(Frame):
                 break
             else:
                 self.besedilo.set("Use only ascii \n characters")
+                self.shra.set_ali_pravilen_ascii(1)
                 break
 
     def _login_btn_clicked(self, event=None):
@@ -413,6 +414,10 @@ class MainScreen(Frame):
 
         if self.checkbox_izbira_dva.get()==1:
             self.checkbox_izbira_dva.set(0)
+        
+        #haha nepricakovano sam dela tudi tako lol hahaha
+        if self.checkbox_izbira_dva.get()==0:
+            self.checkbox_izbira.set(1)
             
     def fixno_ena_des(self):
         self.fixne_denar.configure(state="normal")
@@ -424,6 +429,9 @@ class MainScreen(Frame):
 
         if self.checkbox_izbira.get()==1:
             self.checkbox_izbira.set(0)
+        
+        if self.checkbox_izbira.get()==0:
+            self.checkbox_izbira_dva.set(1)
 
     def doloci_checkbox(self):
         self.checkbox_izbira_dva.set(1)

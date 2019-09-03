@@ -92,7 +92,11 @@ class Shranjevanje:
         return False
 
     def registracija(self, username, password):
-        zapis = open("Reg_data/Reg_data.txt", "a")
+
+        try:
+            zapis = open("Reg_data/Reg_data.txt", "a")
+        except:
+            print("Napaka z datoteko pri registraciji")
         preveri = self.search(username)
 
         asci_preverjanje = self.poglej_za_asci(username)
@@ -123,8 +127,11 @@ class Shranjevanje:
         print("logging in")
 
         if self.search(username) == True:
-            file = open("Reg_data/Reg_data.txt", "r")
-
+            try:
+                file = open("Reg_data/Reg_data.txt", "r")
+            except:
+                print("Napaka z datoteko pri prijavi")
+                file.close()
             if os.stat("Reg_data/Reg_data.txt").st_size == 0:
                 file.close()
                 return False
@@ -157,19 +164,20 @@ class Shranjevanje:
             return False
 
     def create_new_folder_file(self, ime_datoteke):
+        try:
+            if os.path.isdir("Profile_data"):
+                print("profile data folder ok")
+            else:
+                os.makedirs("Profile_data")
+                print("Profile data folder narejen")
 
-        if os.path.isdir("Profile_data"):
-            print("profile data folder ok")
-        else:
-            os.makedirs("Profile_data")
-            print("Profile data folder narejen")
-
-        if os.path.isfile("Profile_data/"+ime_datoteke+".txt"):
-            print("profile FILE  ok")
-        else:
-            open("Profile_data/"+ime_datoteke+".txt", "a")
-            print("Profile data folder narejen")
-
+            if os.path.isfile("Profile_data/"+ime_datoteke+".txt"):
+                print("profile FILE  ok")
+            else:
+                open("Profile_data/"+ime_datoteke+".txt", "a")
+                print("Profile data folder narejen")
+        except:
+            print("napaka pri kreiranju datotek")
 #nebi bilo potrebno>
 def get_username(self):
     return self.vraca_name
