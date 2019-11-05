@@ -310,7 +310,7 @@ class MainScreen(Frame):
     def dodaj_delo(self):
 
         self.shra.create_new_folder_file(self.glavno_ime)
-        
+
         # datoteka.write(name + "\n")
         datoteka = open("Profile_data/" + self.glavno_ime + ".txt", "a")
 
@@ -414,11 +414,11 @@ class MainScreen(Frame):
 
         if self.checkbox_izbira_dva.get()==1:
             self.checkbox_izbira_dva.set(0)
-        
+
         #haha nepricakovano sam dela tudi tako lol hahaha
         if self.checkbox_izbira_dva.get()==0:
             self.checkbox_izbira.set(1)
-            
+
     def fixno_ena_des(self):
         self.fixne_denar.configure(state="normal")
         self.fixne_ure.configure(state="normal")
@@ -429,7 +429,7 @@ class MainScreen(Frame):
 
         if self.checkbox_izbira.get()==1:
             self.checkbox_izbira.set(0)
-        
+
         if self.checkbox_izbira.get()==0:
             self.checkbox_izbira_dva.set(1)
 
