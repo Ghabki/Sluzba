@@ -15,11 +15,11 @@ Daily hour and money tracking aplication. I made this aplication mainly for me a
 
 
 ### Notes
-- I made this aplication in my free time, not the prettiest aplication, I know the code is badly written
+- I made this aplication in my free time, not the prettiest aplication, I know the code is badly written(blah blah neda se mi vec s tem ukvarjat, ce dela dela zajebau sem ze od zacetka)
 - Personal data is not secure!!!
 - The app is not properly tested
 - In the future I will translate to english
-- Date_picker code is not mine
+- Date_picker code is not mine (http://svn.python.org/projects/sandbox/trunk/ttk-gsoc/samples/ttkcalendar.py)
 - Gui.py is main file
 
 
